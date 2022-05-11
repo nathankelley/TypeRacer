@@ -18,9 +18,10 @@ def draw_actors():
 
     arcade.draw_actors()
 
-# this line takes all the things we've asked arcade to draw, and prints them-
-# imagine the draw commands prior to this have been a queue and now they are being
-# rendered
+# We'll start the render, call our draw functions, and finish the render :)
+# rendered. make sure to have set_window() active prior to these commands otherwise they will be useless
+arcade.start_render()
+draw_background()
 arcade.finish_render()
 
 
