@@ -24,6 +24,24 @@ arcade.start_render()
 draw_background()
 arcade.finish_render()
 
+# Xander's Code for Key Input Retrieval
+# This should run outside of all other loops except for the main gameplay loop
+# The key 'Recieving input' is a simple check variable we can toggle between true and false for while the user is actively playing, as it will 
+#   decide if the keyboard inputs should be taken. I feel that we should have a point-and-click menu, something that benefits from this check.
+
+# This is the user input string that will be checked against the block of text that the user is racing to type
+input_string = []
+
+# This is the function to recieve keypress input, more notes on how I plan to duplicate it for the rest of the table inside.
+def on_key_press(self, key, modifier):
+
+    if key == arcade.key.A:
+
+        print("A has been pressed")
+        # A temporary test to show that on press works
+        # once we have the spacing finalized I'll create a table to recieve input for each key
+
+        input_string.append("a")
 
 
 
