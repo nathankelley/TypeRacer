@@ -28,6 +28,7 @@ while RUN_PROGRAM:
 
     # We'll start the render, call our draw functions, and finish the render :)
     # rendered. make sure to have set_window() active prior to these commands otherwise they will be useless
+    window = arcade.open_window(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_TITLE)
     arcade.start_render()
     draw_background()
     arcade.finish_render()
