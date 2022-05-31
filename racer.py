@@ -32,25 +32,31 @@ class MovingObject:
     def draw(self): 
         arcade.draw_texture_rectangle(self.center.x, self.center.y, 50, 50, self.texture, -90) 
 
+class Text_Box:
+    def __init__(self,x, y, width, text):
+        self.width = width
+        self.center = Point(x, y)
+        self.text = arcade.Text(text, self.center.x, self.center.y, arcade.color.BLACK_BEAN, font_size=15, width=self.width-20, anchor_x="center", anchor_y="center", multiline=True)
+        
+        
+    def draw(self):
+        arcade.draw_rectangle_filled(self.center.x, self.center.y, self.width, self.text.content_height+20, arcade.color.WHITE)  
+        self.text.draw() 
+      
 class Racer_Window(arcade.Window):
     def __init__(self):
         super().__init__()
-        arcade.set_background_color(arcade.color.AMARANTH_PINK)
+        arcade.set_background_color(arcade.color.AMARANTH_PINK)        
         
-        moving_object_1 = MovingObject(":resources:images/enemies/ladybug.png")
-        racing_lane_1 = RacingLane(self.width/2, self.height/2 - 100, ":resources:images/topdown_tanks/tileGrass1.png")
-        moving_object_1.set_lane(racing_lane_1)
-        
-        moving_object_2 = MovingObject(":resources:images/animated_characters/robot/robot_idle.png")
-        racing_lane_2 = RacingLane(self.width/2, self.height/2, ":resources:images/topdown_tanks/tileGrass_roadEast.png")
-        moving_object_2.set_lane(racing_lane_2)
         
         moving_object_3 = MovingObject(":resources:images/space_shooter/playerShip1_blue.png")
-        racing_lane_3 = RacingLane(self.width/2, self.height/2 + 100, ":resources:images/backgrounds/abstract_1.jpg")
+        racing_lane_3 = RacingLane(self.width/2, self.height - 100, ":resources:images/backgrounds/abstract_1.jpg")
         moving_object_3.set_lane(racing_lane_3)
         
-        self.moving_objects = [moving_object_1, moving_object_2, moving_object_3]
-        self.racing_lanes = [racing_lane_1, racing_lane_2, racing_lane_3]
+        self.text_box = Text_Box(self.width/2, self.height/2, self.width - 20, "Test")
+        
+        self.moving_objects = [moving_object_3]
+        self.racing_lanes = [racing_lane_3]
         
         
     def on_update(self, delta_time):
@@ -66,7 +72,8 @@ class Racer_Window(arcade.Window):
         for racing_lane in self.racing_lanes:
             racing_lane.draw()
         for moving_object in self.moving_objects:
-                moving_object.draw()    
+                moving_object.draw()  
+        self.text_box.draw()          
             
 if __name__== "__main__":
     racer_window = Racer_Window()
