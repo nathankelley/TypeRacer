@@ -4,7 +4,7 @@ from random import randint
 input_string = []
 #this is a ~~surprise tool~~ global variable that is needed for processing and passing the users input
 
-control_text = "this is the control text"
+control_text = "This is the control text! I live on line 7. Try typing this sentance out and see what happens!"
 #swap this variable and all instances of it out for whatever changing text variable is implemented, this
 #variable is what the program checks the user input against to determine if they completed the typing
 
@@ -93,7 +93,7 @@ class Racer_Window(arcade.Window):
         self.text_box.draw()     
         self.user_box.draw()
     
-    def on_key_press(self, key, modifier):
+    def on_key_press(self, key, modifiers):
 
         # Each of these if statements work to assess what key is pressed and edit the string appropriately 
 
@@ -105,102 +105,224 @@ class Racer_Window(arcade.Window):
         elif key == arcade.key.SPACE:
             input_string.append(" ")
         elif key == arcade.key.SEMICOLON:
-            input_string.append(";")
-        elif key == arcade.key.COLON:
-            input_string.append(":")
-        elif key == arcade.key.DOUBLEQUOTE:
-            input_string.append("\"")
-        elif key == arcade.key.EXCLAMATION:
-            input_string.append("!")
-        elif key == arcade.key.QUESTION:
-            input_string.append("?")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append(":")
+            else:
+                input_string.append(";")
+        elif key == arcade.key.BACKSLASH:
+            input_string.append("\\")
+        elif key == arcade.key.SLASH:
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("?")
+            else:
+                input_string.append("/")
         elif key == arcade.key.MINUS:
-            input_string.append("-")
-        elif key ==arcade.key.ENTER:
-            print(''.join(input_string))
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("_")
+            else:
+                input_string.append("-")
+        elif key == arcade.key.QUOTELEFT:
+            #PYTHON ARCADE PACKAGE IS UNABLE TO DETECT QUOTATION INPUT
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("\"")
+            else:
+                input_string.append("\'")
+
+
+        # this is a helpful key for testing purposes, TK remove once polished.
+        elif key == arcade.key.ENTER:
+            print("".join(input_string))
+        
+
 
         # Character with special effect (remove)
         elif key == arcade.key.BACKSPACE:
             input_string.pop()
             # This will remove the last item from the text
 
-        # Alpha Characters (to be finished)
+        # Alpha Characters (finished)
         elif key == arcade.key.A:
-            input_string.append("a")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("A")
+            else:
+                input_string.append("a")
         elif key == arcade.key.B:
-            input_string.append("b")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("B")
+            else:
+                input_string.append("b")
         elif key == arcade.key.C:
-            input_string.append("c")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("C")
+            else:
+                input_string.append("c")
         elif key == arcade.key.D:
-            input_string.append("d")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("D")
+            else:
+                input_string.append("d")
         elif key == arcade.key.E:
-            input_string.append("e")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("E")
+            else:
+                input_string.append("e")
         elif key == arcade.key.F:
-            input_string.append("f")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("F")
+            else:
+                input_string.append("f")
         elif key == arcade.key.G:
-            input_string.append("g")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("G")
+            else:
+                input_string.append("g")
         elif key == arcade.key.H:
-            input_string.append("h")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("H")
+            else:
+                input_string.append("h")
         elif key == arcade.key.I:
-            input_string.append("i")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("I")
+            else:
+                input_string.append("i")
         elif key == arcade.key.J:
-            input_string.append("j")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("J")
+            else:
+                input_string.append("j")
         elif key == arcade.key.K:
-            input_string.append("k")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("K")
+            else:
+                input_string.append("k")
         elif key == arcade.key.L:
-            input_string.append("l")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("L")
+            else:
+                input_string.append("l")
         elif key == arcade.key.M:
-            input_string.append("m")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("M")
+            else:
+                input_string.append("m")
         elif key == arcade.key.N:
-            input_string.append("n")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("N")
+            else:
+                input_string.append("n")
         elif key == arcade.key.O:
-            input_string.append("o")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("O")
+            else:
+                input_string.append("o")
         elif key == arcade.key.P:
-            input_string.append("p")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("P")
+            else:
+                input_string.append("p")
         elif key == arcade.key.Q:
-            input_string.append("q")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("Q")
+            else:
+                input_string.append("q")
         elif key == arcade.key.R:
-            input_string.append("r")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("R")
+            else:
+                input_string.append("r")
         elif key == arcade.key.S:
-            input_string.append("s")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("S")
+            else:
+               input_string.append("s")
         elif key == arcade.key.T:
-            input_string.append("t")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("T")
+            else:
+               input_string.append("t")
         elif key == arcade.key.U:
-            input_string.append("u")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("U")
+            else:
+                input_string.append("u")
         elif key == arcade.key.V:
-            input_string.append("v")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("V")
+            else:
+                input_string.append("v")
         elif key == arcade.key.W:
-            input_string.append("w")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("W")
+            else:
+               input_string.append("w")
         elif key == arcade.key.X:
-            input_string.append("x")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("X")
+            else:
+                input_string.append("x")
         elif key == arcade.key.Y:
-            input_string.append("y")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("Y")
+            else:
+               input_string.append("y")
         elif key == arcade.key.Z:
-            input_string.append("z")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("Z")
+            else:
+               input_string.append("z")
 
-        # Neumeric Characters
+        # Neumeric Characters (finished)
         elif key == arcade.key.KEY_0:
-            input_string.append("0")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append(")")
+            else:
+                input_string.append("0")
         elif key == arcade.key.KEY_1:
-            input_string.append("1")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("!")
+            else:
+                input_string.append("1")
         elif key == arcade.key.KEY_2:
-            input_string.append("2")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("@")
+            else:
+                input_string.append("2")
         elif key == arcade.key.KEY_3:
-            input_string.append("3")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("#")
+            else:
+                input_string.append("3")
         elif key == arcade.key.KEY_4:
-            input_string.append("4")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("$")
+            else:
+                input_string.append("4")
         elif key == arcade.key.KEY_5:
-            input_string.append("5")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("%")
+            else:
+                input_string.append("5")
         elif key == arcade.key.KEY_6:
-            input_string.append("6")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("^")
+            else:
+                input_string.append("6")
         elif key == arcade.key.KEY_7:
-            input_string.append("7")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("&")
+            else:
+                input_string.append("7")
         elif key == arcade.key.KEY_8:
-            input_string.append("8")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("*")
+            else:
+                input_string.append("8")
         elif key == arcade.key.KEY_9:
-            input_string.append("9")
-        else:
-            print("key input not recognized")
+            if modifiers & arcade.key.MOD_SHIFT:
+                input_string.append("(")
+            else:
+                input_string.append("9")
 
 if __name__== "__main__":
     racer_window = Racer_Window()
