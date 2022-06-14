@@ -68,16 +68,20 @@ class Racer_Window(arcade.Window):
         
         
     def on_update(self, delta_time):
-        for moving_object in self.moving_objects:
-                moving_object.update()
-                if moving_object.percentage < 1 : 
-                    num = randint(1, 10)
-                    if num == 1:
-                        moving_object.percentage += .01 
-        
         # constantly updating the user text box to reflect what they are typing
         self.user_box.text = self.text = arcade.Text("".join(input_string), self.user_box.center.x, self.user_box.center.y, arcade.color.BLACK_BEAN, font_size=15, width=self.width-20, anchor_x="center", anchor_y="center", multiline=True)
         self.user_box.draw()
+
+        # this is the code that on update will compate the user input to the text box to see what % of the passage they have typed
+        # if you change the global variable control_text please update this input as well, thanks!
+        ship_move_percent = self.compare_strings(input_string,control_text)
+
+        # basic implementation of ship percentage bar
+        for moving_object in self.moving_objects:
+                moving_object.update()
+                if moving_object.percentage < 1 : 
+                    # if the object isnt at 100% then we do the following:
+                    moving_object.percentage = ship_move_percent
 
         if (("".join(input_string)) == control_text):
             print("The texts were identical, program exiting because no 'you win' is implemented yet. See line 83 (as of 6/7/2022)")
@@ -93,6 +97,18 @@ class Racer_Window(arcade.Window):
         self.text_box.draw()     
         self.user_box.draw()
     
+    def compare_strings(self, string1, string2):
+        # pass user input as string1, and use the text box as string2
+        counter = 0
+        for i in string1:
+            if i == string2[counter]:
+                counter += 1
+            else:
+                # once we've hit a wrong letter we stop the increments
+                break
+        percent = counter / len(string2)
+        return percent
+
     def on_key_press(self, key, modifiers):
 
         # Each of these if statements work to assess what key is pressed and edit the string appropriately 
