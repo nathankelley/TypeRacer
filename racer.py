@@ -1,4 +1,5 @@
 import arcade
+import menu
 from random import randint
 
 input_string = []
@@ -84,8 +85,8 @@ class Racer_Window(arcade.Window):
                     moving_object.percentage = ship_move_percent
 
         if (("".join(input_string)) == control_text):
+            menu.GameOverView().on_draw()
             print("The texts were identical, program exiting because no 'you win' is implemented yet. See line 83 (as of 6/7/2022)")
-            exit()
             
             
     def on_draw(self):

@@ -6,6 +6,9 @@ import arcade.gui
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 1200
 SCREEN_TITLE = "Typeracer"
+GAME_OVER_TITLE = "GAME OVER"
+RESTART_BUTTON_TEXT = "Restart"
+EXIT_BUTTON_TEXT = "Exit"
 
 def draw_background():
     # This draws the background to fill the screen
@@ -37,13 +40,7 @@ def draw_background():
                                           SCREEN_HEIGHT / 3 - 55,
                                           arcade.color.WHITE)    
         
-    
-  
-  
-# Method for quit button
-class QuitButton(arcade.gui.UIFlatButton):
-    def on_click(self, event: arcade.gui.UIOnClickEvent):
-        arcade.exit()    
+   
     
 class Menu(arcade.Window):
     def __init__(self, width: int = 800, height: int = 600, title: str = 'Arcade Window', fullscreen: bool = False, resizable: bool = False, update_rate: float = 1 / 60):
@@ -80,9 +77,55 @@ class Menu(arcade.Window):
     
     def on_key_press(self, key: int, modifiers: int):
         print(chr(key))
-     
+        
+        
+############### QUIT BUTTON ###############
+class QuitButton(arcade.gui.UIFlatButton):
+    def on_click(self, event: arcade.gui.UIOnClickEvent):
+        arcade.exit()    
+
+
+############### GAME OVER VIEW ###############
+class GameOverView(arcade.View, Menu):
+    def __init__(self):
+        super().__init__()
+        
+    #FOR THE UI
+        self.manager = arcade.gui.UIManager()
+        self.manager.enable()
+        
+    # Box for buttons
+        self.v_box = arcade.gui.UIBoxLayout()
+        
+    # Draw exit and restart button
+        restart_button = QuitButton(text = RESTART_BUTTON_TEXT, width = 200)
+        self.v_box.add(restart_button)    
+        exit_button = arcade.gui.UIFlatButton(text = EXIT_BUTTON_TEXT, width = 200)
+        self.v_box.add(exit_button.with_space_around(bottom = 20))
+        
+        self.manager.add(
+            arcade.gui.UIAnchorWidget(
+                anchor_x = "center_x",
+                anchor_y = "center_y",
+                child = self.v_box
+            )
+        )
+        
+    def draw_title(self):
+        arcade.draw_text(GAME_OVER_TITLE, self.width/2, self.height-150, arcade.color.BLACK_BEAN, font_size=100, font_name="Caveat", anchor_x="center")
+    
+    def on_draw(self):
+        self.clear()
+        draw_background()
+        self.manager.draw()
+        self.draw_title()   
+    
+    def on_key_press(self, key: int, modifiers: int):
+        print(chr(key))
+        
+        
         
 if __name__ == "__main__":
     menu = Menu(SCREEN_WIDTH,SCREEN_HEIGHT, SCREEN_TITLE)        
     
-    arcade.run()   
+    arcade.run()
