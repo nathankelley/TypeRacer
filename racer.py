@@ -56,6 +56,7 @@ class Racer_Window(arcade.Window):
         super().__init__()
         arcade.set_background_color(arcade.color.AMARANTH_PINK)        
         
+        self.total_time = 0.0
         
         moving_object_3 = MovingObject(":resources:images/space_shooter/playerShip1_blue.png")
         racing_lane_3 = RacingLane(self.width/2, self.height - 100, ":resources:images/backgrounds/abstract_1.jpg")
@@ -84,6 +85,23 @@ class Racer_Window(arcade.Window):
                     # if the object isnt at 100% then we do the following:
                     moving_object.percentage = ship_move_percent
 
+        # basic implementation of wpm calculation
+        # counting the " " (space) characters in the correct-text tells us how many words the user has written.
+        # first we need a basic accumulation of time (using the delta_time input for the on_update class!)
+        self.total_time += delta_time
+        minutes = int(self.total_time) / 60
+
+        # now we find how many words the user has written:
+        words = self.calculate_words(input_string, control_text)
+        if minutes != 0:
+            wpm = words / minutes
+            # uncomment the below command text for a real-time update of your wpm printed in the terminal as you play! 
+            # print(wpm) 
+        
+        # Once we find a good spot to draw() the wpm on the screen we'll write the code to update it's value here:
+        # <    >
+        
+
         if (("".join(input_string)) == control_text):
             menu.GameOverView().on_draw()
             print("The texts were identical, program exiting because no 'you win' is implemented yet. See line 83 (as of 6/7/2022)")
@@ -109,6 +127,23 @@ class Racer_Window(arcade.Window):
                 break
         percent = counter / len(string2)
         return percent
+
+    def calculate_words(self, string1, string2):
+        counter = 0
+        spaces = 0
+        for i in string1:
+            if i == string2[counter]:
+                counter += 1
+                if i == " ":
+                    spaces += 1
+            else:
+                # once we've hit a wrong letter we stop the increments
+                break
+        # The space is added after the word is completed, so returning the number of spaces from the correct string list will
+        # guarantee that we have the number of total words completed.    
+        return spaces
+        
+
 
     def on_key_press(self, key, modifiers):
 
