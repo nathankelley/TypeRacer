@@ -6,8 +6,12 @@ input_string = []
 #this is a ~~surprise tool~~ global variable that is needed for processing and passing the users input
 
 control_text = "This is the control text! I live on line 7. Try typing this sentance out and see what happens!"
-#swap this variable and all instances of it out for whatever changing text variable is implemented, this
-#variable is what the program checks the user input against to determine if they completed the typing
+
+with open('texts/text.txt') as txt:
+    control_text = txt.read()
+    txt.close()
+
+# this pulls the text from the file
 
 class Point:
     def __init__(self, x, y):
@@ -68,6 +72,7 @@ class Racer_Window(arcade.Window):
         self.moving_objects = [moving_object_3]
         self.racing_lanes = [racing_lane_3]
         
+        # set up the text file for the user
         
     def on_update(self, delta_time):
         # constantly updating the user text box to reflect what they are typing
@@ -115,6 +120,9 @@ class Racer_Window(arcade.Window):
                 moving_object.draw()  
         self.text_box.draw()     
         self.user_box.draw()
+
+    
+        
     
     def compare_strings(self, string1, string2):
         # pass user input as string1, and use the text box as string2
