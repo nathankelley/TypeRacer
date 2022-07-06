@@ -2,8 +2,11 @@ import arcade
 import menu
 from random import randint
 
+timer_running = False
 input_string = []
 #this is a ~~surprise tool~~ global variable that is needed for processing and passing the users input
+
+
 
 control_text = "This is the control text! I live on line 7. Try typing this sentance out and see what happens!"
 
@@ -61,6 +64,7 @@ class Racer_Window(arcade.Window):
         arcade.set_background_color(arcade.color.AMARANTH_PINK)        
         
         self.total_time = 0.0
+        self.timer_running = False
         
         moving_object_3 = MovingObject(":resources:images/space_shooter/playerShip1_blue.png")
         racing_lane_3 = RacingLane(self.width/2, self.height - 100, ":resources:images/backgrounds/abstract_1.jpg")
@@ -68,6 +72,7 @@ class Racer_Window(arcade.Window):
         
         self.text_box = Text_Box(self.width/2, self.height/2, self.width - 20, control_text)
         self.user_box = Text_Box(self.width/2, self.height/2 - 100, self.width - 20, "")
+        self.wpm_box = Text_Box(self.width/2, self.height/2 - 200, self.width/8, "")
 
         self.moving_objects = [moving_object_3]
         self.racing_lanes = [racing_lane_3]
@@ -93,18 +98,22 @@ class Racer_Window(arcade.Window):
         # basic implementation of wpm calculation
         # counting the " " (space) characters in the correct-text tells us how many words the user has written.
         # first we need a basic accumulation of time (using the delta_time input for the on_update class!)
-        self.total_time += delta_time
-        minutes = int(self.total_time) / 60
+        minutes = 0
+        wpm = 0
+        if (self.timer_running):
+            self.total_time += delta_time
+            minutes = int(self.total_time) / 60
 
         # now we find how many words the user has written:
         words = self.calculate_words(input_string, control_text)
         if minutes != 0:
-            wpm = words / minutes
-            # uncomment the below command text for a real-time update of your wpm printed in the terminal as you play! 
+            wpm = round(words / minutes)
+            # uncomment the below command text for a real-time update of your wpm printed in the terminal for debugging purposes
             # print(wpm) 
+            self.wpm_box.draw()
         
         # Once we find a good spot to draw() the wpm on the screen we'll write the code to update it's value here:
-        # <    >
+        self.wpm_box.text = arcade.Text("".join("wpm: "+ str(wpm)), self.wpm_box.center.x, self.wpm_box.center.y, arcade.color.BLACK_BEAN, font_size=10, width=60, anchor_x="center", anchor_y="center")
         
 
         if (("".join(input_string)) == control_text):
@@ -119,7 +128,8 @@ class Racer_Window(arcade.Window):
         for moving_object in self.moving_objects:
                 moving_object.draw()  
         self.text_box.draw()     
-        self.user_box.draw()
+        self.user_box.draw()    
+        self.wpm_box.draw()    
 
     
         
@@ -154,6 +164,9 @@ class Racer_Window(arcade.Window):
 
 
     def on_key_press(self, key, modifiers):
+
+        # As soon as the first key is pressed, we start counting for wpm:
+        self.timer_running = True
 
         # Each of these if statements work to assess what key is pressed and edit the string appropriately 
 
