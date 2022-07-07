@@ -58,7 +58,7 @@ class Text_Box:
         arcade.draw_rectangle_filled(self.center.x, self.center.y, self.width, self.text.content_height+20, arcade.color.WHITE)  
         self.text.draw() 
 
-class Racer_Window(arcade.Window):
+class Racer_Window(arcade.View):
     def __init__(self):
         super().__init__()
         arcade.set_background_color(arcade.color.AMARANTH_PINK)        
@@ -67,21 +67,24 @@ class Racer_Window(arcade.Window):
         self.timer_running = False
         
         moving_object_3 = MovingObject(":resources:images/space_shooter/playerShip1_blue.png")
-        racing_lane_3 = RacingLane(self.width/2, self.height - 100, ":resources:images/backgrounds/abstract_1.jpg")
+        racing_lane_3 = RacingLane(self.window.width/2, self.window.height - 100, ":resources:images/backgrounds/abstract_1.jpg")
         moving_object_3.set_lane(racing_lane_3)
         
-        self.text_box = Text_Box(self.width/2, self.height/2, self.width - 20, control_text)
-        self.user_box = Text_Box(self.width/2, self.height/2 - 100, self.width - 20, "")
-        self.wpm_box = Text_Box(self.width/2, self.height/2 - 200, self.width/8, "")
+        self.text_box = Text_Box(self.window.width/2, self.window.height/2, self.window.width - 20, control_text)
+        self.user_box = Text_Box(self.window.width/2, self.window.height/2 - 100, self.window.width - 20, "")
+        self.wpm_box = Text_Box(self.window.width/2, self.window.height/2 - 200, self.window.width/8, "")
 
         self.moving_objects = [moving_object_3]
         self.racing_lanes = [racing_lane_3]
+        
+        global input_string
+        input_string = []
         
         # set up the text file for the user
         
     def on_update(self, delta_time):
         # constantly updating the user text box to reflect what they are typing
-        self.user_box.text = self.text = arcade.Text("".join(input_string), self.user_box.center.x, self.user_box.center.y, arcade.color.BLACK_BEAN, font_size=15, width=self.width-20, anchor_x="center", anchor_y="center", multiline=True)
+        self.user_box.text = self.text = arcade.Text("".join(input_string), self.user_box.center.x, self.user_box.center.y, arcade.color.BLACK_BEAN, font_size=15, width=self.window.width-20, anchor_x="center", anchor_y="center", multiline=True)
         self.user_box.draw()
 
         # this is the code that on update will compate the user input to the text box to see what % of the passage they have typed
@@ -117,7 +120,8 @@ class Racer_Window(arcade.Window):
         
 
         if (("".join(input_string)) == control_text):
-            menu.GameOverView().on_draw()
+            gameoverview = menu.GameOverView(wpm)
+            self.window.show_view(gameoverview)
             print("The texts were identical, program exiting because no 'you win' is implemented yet. See line 83 (as of 6/7/2022)")
             
             
@@ -398,7 +402,9 @@ class Racer_Window(arcade.Window):
                 input_string.append("9")
 
 if __name__== "__main__":
-    racer_window = Racer_Window()
+    window = arcade.Window(width = 800, height = 600, title = 'Arcade Window', fullscreen = False, resizable = False, update_rate= 1 / 60)
+    menu_view = menu.Menu()
+    window.show_view(menu_view)
     arcade.run()           
             
          
